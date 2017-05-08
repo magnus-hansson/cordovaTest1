@@ -1,0 +1,50 @@
+﻿// For an introduction to the Blank template, see the following documentation:
+// http://go.microsoft.com/fwlink/?LinkID=397704
+// To debug code on page load in cordova-simulate or on Android devices/emulators: launch your app, set breakpoints, 
+// and then run "window.location.reload()" in the JavaScript Console.
+(function () {
+    "use strict";
+
+    document.addEventListener("deviceready", onDeviceReady2, false);
+    function onDeviceReady2() {
+        var push = PushNotification.init({ "android": { "senderID": "582792723283" } });
+        push.on('registration', function (data) {
+            console.log(data.registrationId);
+            document.getElementById("gcm_id").innerHTML = data.registrationId;
+        });
+
+        push.on('notification', function (data) {
+            alert(data.title + " Message: " + data.message);
+        });
+
+        push.on('error', function (e) {
+            alert(e);
+        });
+    }
+
+
+    document.addEventListener( 'deviceready', onDeviceReady.bind( this ), false );
+    console.log('device ready');
+    function onDeviceReady() {
+        // Handle the Cordova pause and resume events
+        document.addEventListener( 'pause', onPause.bind( this ), false );
+        document.addEventListener( 'resume', onResume.bind( this ), false );
+        
+        // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
+        var parentElement = document.getElementById('deviceready');
+        var listeningElement = parentElement.querySelector('.listening');
+        var receivedElement = parentElement.querySelector('.received');
+        listeningElement.setAttribute('style', 'display:none;');
+        receivedElement.setAttribute('style', 'display:block;');
+
+       
+    };
+
+    function onPause() {
+        // TODO: This application has been suspended. Save application state here.
+    };
+
+    function onResume() {
+        // TODO: This application has been reactivated. Restore application state here.
+    };
+} )();
